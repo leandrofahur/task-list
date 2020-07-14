@@ -1,3 +1,7 @@
+/*
+  Code based on the udemy course: https://www.udemy.com/course/modern-javascript-from-the-beginning
+*/
+
 // UI vars:
 const task = document.getElementById('task');                        
 const addTaskBtn = document.getElementById('add-task-btn');          
@@ -13,7 +17,12 @@ let checkboxCtrlNumber = 0;
 const loadAllEventsListeners = () => {
   // Click on btn ( Add Task ):
   addTaskBtn.addEventListener('click', onAddTaskBtnClick);
+  // Delete all tasks:
   deleteTaskBtn.addEventListener('click', onDeleteAllBtnClick);
+  // Remove onl one task:
+  taskList.addEventListener('click', removeTask);
+  // Filter the tasks:
+  taskFilter.addEventListener('keyup', filterTasks);
 }
 
 // Handle the ( Add Task ) button:
@@ -27,7 +36,7 @@ const onAddTaskBtnClick = (e) => {
     // Add class
     li.className = 'collection-item';
     // Create text node and append to li
-    li.innerHTML = `<input type="checkbox" id=${checkboxCtrlNumber.toString()}> 
+    li.innerHTML = `<input type="checkbox" class="mark-item" id=${checkboxCtrlNumber.toString()}> 
     <label for=${checkboxCtrlNumber.toString()}>${task.value}</label>`
     checkboxCtrlNumber += 1;
     const link = document.createElement('a');
@@ -52,6 +61,38 @@ const onDeleteAllBtnClick = (e) => {
   while(taskList.firstChild) {
     taskList.removeChild(taskList.firstChild);
   }
+  // Reset the checkbox counter var:
+  checkboxCtrlNumber = 0;
+  e.preventDefault();
+}
+
+// Handle the deletion of one task:
+const removeTask = (e) => {
+  if(e.target.parentElement.classList.contains('delete-item')) {
+    if(confirm('Are you sure?'))
+      e.target.parentElement.parentElement.remove();
+  }
+  // if(e.target.parentElement.classList.contains('collection-item')) {    
+  //   let text = e.target.parentElement.innerText;
+  //   let strikeText = text.strike();
+  //   console.log(strikeText);
+  // }    
+}
+
+// Handle the tasks filtering:
+const filterTasks = (e) => {
+  let text = e.target.value.toLowerCase();
+  // document.querySelectorAll('.collection-item').forEach(function(task){
+  //   const item = task.firstChild.textContent;
+  //   if(item.toLowerCase().indexOf(text) != -1){
+  //     task.style.display = 'block';
+  //   } else {
+  //     task.style.display = 'none';
+  //   }
+  // });
+
+  // console.log(document.querySelectorAll('.collection-item').textContent);
+
   e.preventDefault();
 }
 
