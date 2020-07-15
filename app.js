@@ -45,6 +45,7 @@ const onAddTaskBtnClick = (e) => {
     // Add icon html
     link.innerHTML = '<i class="fa fa-trash" aria-hidden="true"></i>';
     // Append the link to li
+    console.log(li);
     li.appendChild(link);
     // Append li to ul
     taskList.appendChild(li);
@@ -82,17 +83,17 @@ const removeTask = (e) => {
 // Handle the tasks filtering:
 const filterTasks = (e) => {
   let text = e.target.value.toLowerCase();
-  // document.querySelectorAll('.collection-item').forEach(function(task){
-  //   const item = task.firstChild.textContent;
-  //   if(item.toLowerCase().indexOf(text) != -1){
-  //     task.style.display = 'block';
-  //   } else {
-  //     task.style.display = 'none';
-  //   }
-  // });
-
-  // console.log(document.querySelectorAll('.collection-item').textContent);
-
+  const nodeList = document.querySelectorAll('.collection-item');
+  nodeList.forEach((elem) => {
+    // console.log(elem.textContent);
+    const firstElemContent = elem.textContent;
+    if(firstElemContent.toLowerCase().indexOf(text) != -1){
+      elem.style.display = 'block';
+    } else {
+      elem.style.display = 'none';
+    } 
+  });
+  // console.log(nodeList[0]);
   e.preventDefault();
 }
 
